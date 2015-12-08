@@ -104,5 +104,18 @@ func (c *Calibrator) Calibrate(navboard NavdataReader, r *Calibration) error {
 			r.GyroZeros.Yaw = mean
 		}
 	}
+	fmt.Println("PRY from calibration:", r.AccZeros.Pitch, r.AccZeros.Roll, r.AccZeros.Yaw)
+	fmt.Println("PRY scale from calibration:", r.AccScale.Pitch, r.AccScale.Roll, r.AccScale.Yaw)
+	
+	// Roll and Pitch are inverted.
+	// High values of Pitch make it go right (confirmed)
+	// Lower values of Roll make it go forward (confirmed)
+	r.AccZeros.Pitch -= 7.5 2033.0
+	r.AccZeros.Roll += 14.0 2090.0
+	
+	//r.AccScale.Pitch = 502.65 // Try 512 for all?
+	//r.AccScale.Roll = 502.65
+	//r.AccScale.Yaw = 502.65
+	
 	return nil
 }
